@@ -359,7 +359,8 @@ config BR2_PACKAGE_QT_ARCH_SUPPORTS_WEBKIT
 	# see src/3rdparty/webkit/Source/JavaScriptCore/wtf/Platform.h
 	default y if BR2_arm || BR2_armeb || BR2_i386 || BR2_mips || \
 		BR2_mipsel || BR2_powerpc || BR2_sh4 || BR2_sh4eb || \
-		BR2_sh4a || BR2_sh4aeb || BR2_sparc || BR2_x86_64
+		BR2_sh4a || BR2_sh4aeb || BR2_sparc || BR2_x86_64 || \
+		BR2_arc || BR2_arceb
 
 config BR2_PACKAGE_QT_WEBKIT
 	bool "WebKit Module"

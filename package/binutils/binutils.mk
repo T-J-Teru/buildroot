@@ -19,10 +19,10 @@ endif
 ifeq ($(ARCH),avr32)
 BINUTILS_SITE = ftp://www.at91.com/pub/buildroot
 endif
-ifeq ($(BR2_arc),y)
-BINUTILS_SITE = $(call github,foss-for-synopsys-dwc-arc-processors,binutils-gdb,$(BINUTILS_VERSION))
+ifeq ($(BR2_BINUTILS_VERSION_GIT),y)
+BINUTILS_SITE = $(call qstrip,$(BR2_BINUTILS_CUSTOM_REPO_URL))
+BINUTILS_SITE_METHOD = git
 BINUTILS_SOURCE = binutils-$(BINUTILS_VERSION).tar.gz
-BINUTILS_FROM_GIT = y
 endif
 BINUTILS_SITE ?= $(BR2_GNU_MIRROR)/binutils
 BINUTILS_SOURCE ?= binutils-$(BINUTILS_VERSION).tar.bz2
@@ -33,7 +33,7 @@ HOST_BINUTILS_DEPENDENCIES =
 BINUTILS_LICENSE = GPLv3+, libiberty LGPLv2.1+
 BINUTILS_LICENSE_FILES = COPYING3 COPYING.LIB
 
-ifeq ($(BINUTILS_FROM_GIT),y)
+ifeq ($(BR2_BINUTILS_VERSION_GIT),y)
 BINUTILS_DEPENDENCIES += host-texinfo host-flex host-bison
 HOST_BINUTILS_DEPENDENCIES += host-texinfo host-flex host-bison
 endif

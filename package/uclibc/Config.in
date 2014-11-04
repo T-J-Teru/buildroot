@@ -21,15 +21,33 @@ choice
 		bool "uClibc 0.9.33.x"
 		depends on !(BR2_arc || BR2_avr32 || BR2_xtensa)
 
-	config BR2_UCLIBC_VERSION_XTENSA_GIT
-		bool "uClibc Git Xtensa"
-		depends on BR2_xtensa
+	config BR2_UCLIBC_VERSION_GIT
+		bool "uClibc Git"
 
 	config BR2_UCLIBC_VERSION_SNAPSHOT
 		bool "daily snapshot"
 		depends on !(BR2_arc)
 
 endchoice
+
+if BR2_UCLIBC_VERSION_GIT
+
+config BR2_UCLIBC_CUSTOM_REPO_URL
+	string "URL of uClibc repository"
+	default "git://github.com/foss-for-synopsys-dwc-arc-processors/uClibc" if BR2_arc
+        default "git://git.busybox.net/uClibc" if BR2_xtensa
+	help
+	  URL for git repository to use.
+
+config BR2_UCLIBC_CUSTOM_REPO_VERSION
+	string "Version from uClibc repository"
+	default "arc-2014.08" if BR2_arc
+	default "7bf35c8b7d4a1f97174eb49f47f33946b282114c" if BR2_xtensa
+	help
+	  Revision to use in the typical format used by Git/Mercurial
+	  E.G. a sha id, a tag, branch, ..
+
+endif
 
 config BR2_USE_UCLIBC_SNAPSHOT
 	string "Date (yyyymmdd) of snapshot or 'snapshot' for latest"
@@ -42,17 +60,15 @@ config BR2_UCLIBC_VERSION_STRING
 	string
 	default 0.9.31.1	if BR2_UCLIBC_VERSION_0_9_31
 	default 0.9.33.2	if BR2_UCLIBC_VERSION_0_9_33
-	default "aburgess-arc-mainline-tls" if BR2_arc
-	default "7bf35c8b7d4a1f97174eb49f47f33946b282114c" if BR2_UCLIBC_VERSION_XTENSA_GIT
+	default BR2_UCLIBC_CUSTOM_REPO_VERSION if BR2_UCLIBC_VERSION_GIT
 	default BR2_USE_UCLIBC_SNAPSHOT	if BR2_UCLIBC_VERSION_SNAPSHOT
 
 config BR2_UCLIBC_CONFIG
 	string "uClibc configuration file to use?"
 	default "package/uclibc/uClibc-0.9.31.config" if BR2_UCLIBC_VERSION_0_9_31
 	default "package/uclibc/uClibc-0.9.33.config" if BR2_UCLIBC_VERSION_0_9_33
-	default "package/uclibc/uClibc-snapshot.config" if BR2_arc
 	default "package/uclibc/uClibc-snapshot.config" if BR2_UCLIBC_VERSION_SNAPSHOT
-	default "package/uclibc/uClibc-snapshot.config" if BR2_UCLIBC_VERSION_XTENSA_GIT
+	default "package/uclibc/uClibc-snapshot.config" if BR2_UCLIBC_VERSION_GIT
 	help
 	  Some people may wish to use their own modified uClibc configuration
 	  file and will specify their config file location with this option.

@@ -11,11 +11,8 @@ UCLIBC_LICENSE_FILES = COPYING.LIB
 
 ifeq ($(BR2_UCLIBC_VERSION_SNAPSHOT),y)
 UCLIBC_SITE = http://www.uclibc.org/downloads/snapshots
-else ifeq ($(BR2_arc),y)
-UCLIBC_SITE = $(call github,T-J-Teru,synopsys-uClibc,$(UCLIBC_VERSION))
-UCLIBC_SOURCE = uClibc-$(UCLIBC_VERSION).tar.gz
-else ifeq ($(BR2_UCLIBC_VERSION_XTENSA_GIT),y)
-UCLIBC_SITE = git://git.busybox.net/uClibc
+else ifeq ($(BR2_UCLIBC_VERSION_GIT),y)
+UCLIBC_SITE = $(call qstrip,$(BR2_UCLIBC_CUSTOM_REPO_URL))
 UCLIBC_SOURCE = uClibc-$(UCLIBC_VERSION).tar.gz
 else
 UCLIBC_SITE = http://www.uclibc.org/downloads

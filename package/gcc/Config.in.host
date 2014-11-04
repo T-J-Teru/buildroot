@@ -9,7 +9,7 @@ config BR2_GCC_SUPPORTS_GRAPHITE
 choice
 	prompt "GCC compiler Version"
 	default BR2_GCC_VERSION_4_2_2_AVR32_2_1_5 if BR2_avr32
-	default BR2_GCC_VERSION_4_8_ARC if BR2_arc
+	default BR2_GCC_VERSION_GIT if BR2_arc
 	default BR2_GCC_VERSION_4_9_X if BR2_microblaze || BR2_powerpc64le
 	default BR2_GCC_VERSION_4_5_X if BR2_bfin
 	default BR2_GCC_VERSION_4_8_X
@@ -70,12 +70,6 @@ choice
 		select BR2_GCC_NEEDS_MPC
 		select BR2_GCC_SUPPORTS_GRAPHITE
 
-	config BR2_GCC_VERSION_4_8_ARC
-		bool "gcc 4.8-arc"
-		# Only supported architecture
-		depends on BR2_arc
-		select BR2_GCC_NEEDS_MPC
-
 	config BR2_GCC_VERSION_4_9_X
 		bool "gcc 4.9.x"
 		# Broken or unsupported architectures
@@ -84,11 +78,33 @@ choice
 		select BR2_GCC_NEEDS_MPC
 		select BR2_GCC_SUPPORTS_GRAPHITE
 
+	config BR2_GCC_VERSION_GIT
+		bool "gcc version from git"
+		# Only supported architecture
+		select BR2_GCC_NEEDS_MPC
+
 endchoice
 
 config BR2_GCC_SUPPORTS_FINEGRAINEDMTUNE
 	bool
 	default y if !BR2_GCC_VERSION_4_2_2_AVR32_2_1_5
+
+if BR2_GCC_VERSION_GIT
+
+config BR2_GCC_CUSTOM_REPO_URL
+	string "URL of GCC repository"
+	default "https://github.com/foss-for-synopsys-dwc-arc-processors/gcc" if BR2_arc
+	help
+	  URL for git repository to use.
+
+config BR2_GCC_CUSTOM_REPO_VERSION
+	string "Version from GCC repository"
+	default "arc-2014.08" if BR2_arc
+	help
+	  Revision to use in the typical format used by Git/Mercurial
+	  E.G. a sha id, a tag, branch, ..
+
+endif
 
 config BR2_GCC_VERSION
 	string
@@ -97,7 +113,7 @@ config BR2_GCC_VERSION
 	default "4.7.4"     if BR2_GCC_VERSION_4_7_X
 	default "4.8.4"     if BR2_GCC_VERSION_4_8_X
 	default "4.9.2"     if BR2_GCC_VERSION_4_9_X
-	default "arc-4.8-tls-v2" if BR2_GCC_VERSION_4_8_ARC
+	default BR2_GCC_CUSTOM_REPO_VERSION if BR2_GCC_VERSION_GIT
 
 config BR2_EXTRA_GCC_CONFIG_OPTIONS
 	string "Additional gcc options"

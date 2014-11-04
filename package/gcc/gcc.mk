@@ -12,9 +12,10 @@ GCC_VERSION = $(call qstrip,$(BR2_GCC_VERSION))
 
 ifeq ($(findstring avr32,$(GCC_VERSION)),avr32)
 GCC_SITE = ftp://www.at91.com/pub/buildroot
-else ifeq ($(BR2_arc),y)
-GCC_SITE = $(call github,foss-for-synopsys-dwc-arc-processors,gcc,$(GCC_VERSION))
+else ifeq ($(BR2_GCC_VERSION_GIT),y)
+GCC_SITE = $(call qstrip,$(BR2_GCC_CUSTOM_REPO_URL))
 GCC_SOURCE = gcc-$(GCC_VERSION).tar.gz
+GCC_SITE_METHOD = git
 else
 GCC_SITE = $(BR2_GNU_MIRROR:/=)/gcc/gcc-$(GCC_VERSION)
 endif

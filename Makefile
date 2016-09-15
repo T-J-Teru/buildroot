@@ -31,7 +31,7 @@ all:
 export BR2_VERSION := 2015.05
 
 # EZchip buildroot extra version
-EZCHIP_VERSION = EZchip_1.1
+EZCHIP_VERSION = EZchip_1.0
 
 # Check for minimal make version (note: this check will break at make 10.x)
 MIN_MAKE_VERSION = 3.81

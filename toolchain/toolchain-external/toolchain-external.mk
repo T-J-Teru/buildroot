@@ -377,7 +377,7 @@ TOOLCHAIN_EXTERNAL_SOURCE = crossx86-x86_64-linux-musl-$(TOOLCHAIN_EXTERNAL_VERS
 endif
 else ifeq ($(BR2_TOOLCHAIN_EXTERNAL_SYNOPSYS_ARC_2014_12),y)
 TOOLCHAIN_EXTERNAL_SITE = https://github.com/foss-for-synopsys-dwc-arc-processors/toolchain/releases/download/arc-2014.12
-ifeq ($(BR2_arc750d)$(BR2_arc770d),y)
+ifeq ($(BR2_arc750d)$(BR2_arc770d)$(BR2_nps400),y)
 TOOLCHAIN_EXTERNAL_SYNOPSYS_CORE = arc700
 else
 TOOLCHAIN_EXTERNAL_SYNOPSYS_CORE = archs

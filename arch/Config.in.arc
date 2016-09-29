@@ -14,6 +14,9 @@ config BR2_arc770d
 config BR2_archs38
 	bool "ARC HS38"
 
+config BR2_nps400
+	bool "Mellanox NPS400"
+
 endchoice
 
 # Choice of atomic instructions presence
@@ -40,3 +43,4 @@ config BR2_GCC_TARGET_CPU
 	default "arc700" if BR2_arc750d
 	default "arc700" if BR2_arc770d
 	default "archs"	 if BR2_archs38
+	default "nps400" if BR2_nps400
